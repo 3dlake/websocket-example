@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 
-import styles from "../styles/Home.module.css";
+import styles from "../styles/Client.module.css";
 
 let socket;
 
-export default function Home() {
-  const [input, setInput] = useState("");
+export default function Client() {
+  const [display, setDisplay] = useState("");
 
   useEffect(() => {
     useSocket();
@@ -14,7 +14,6 @@ export default function Home() {
 
   const useSocket = async () => {
     // CONNECT TO SERVER
-    await fetch("/api/socket");
     socket = io();
 
     // LISTEN TO EVENTS
@@ -23,24 +22,13 @@ export default function Home() {
     });
 
     socket.on("update-input", (msg) => {
-      setInput(msg);
+      setDisplay(msg);
     });
-  };
-
-  // BROADCAST EVENTS
-  const onChangeHandler = (e) => {
-    setInput(e.target.value);
-    socket.emit("new-input", e.target.value);
   };
 
   return (
     <main className={styles.main}>
-      <input
-        className={styles.content}
-        placeholder="Enter Text"
-        value={input}
-        onChange={onChangeHandler}
-      />
+      <h1 className={styles.text}>{display}</h1>
     </main>
   );
 }
