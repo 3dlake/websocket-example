@@ -13,11 +13,9 @@ export default function Home() {
   }, []);
 
   const useSocket = async () => {
-    // CONNECT TO SERVER
     await fetch("/api/socket");
     socket = io();
 
-    // LISTEN TO EVENTS
     socket.on("connect", () => {
       console.log(`[app] socket connected (ID: ${socket.id})`);
     });
@@ -27,7 +25,6 @@ export default function Home() {
     });
   };
 
-  // BROADCAST EVENTS
   const onChangeHandler = (e) => {
     setInput(e.target.value);
     socket.emit("new-input", e.target.value);

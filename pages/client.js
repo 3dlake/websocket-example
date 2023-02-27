@@ -12,11 +12,9 @@ export default function Client() {
     useSocket();
   }, []);
 
-  const useSocket = async () => {
-    // CONNECT TO SERVER
+  const useSocket = () => {
     socket = io();
 
-    // LISTEN TO EVENTS
     socket.on("connect", () => {
       console.log(`[app] socket connected (ID: ${socket.id})`);
     });
